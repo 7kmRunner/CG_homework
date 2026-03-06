@@ -29,6 +29,8 @@ class Canvas : public Widget
         kRect = 2,
         kEllipse = 3,
         kPolygon = 4,
+        kFreehand = 5,
+        kChoose  = 6,
     };
 
     // Shape type setters.
@@ -36,6 +38,10 @@ class Canvas : public Widget
     void set_line();
     void set_rect();
     // HW1_TODO: more shape types.
+    void set_ellipse();
+    void set_polygon();
+    void set_freehand();
+    void set_choose();
 
     // Clears all shapes from the canvas.
     void clear_shape_list();
@@ -46,6 +52,9 @@ class Canvas : public Widget
     // Controls the visibility of the canvas background.
     void show_background(bool flag);
 
+    bool undo();
+
+    bool redo();
    private:
     // Drawing functions.
     void draw_background();
@@ -53,7 +62,7 @@ class Canvas : public Widget
 
     // Event handlers for mouse interactions.
     void mouse_click_event();
-    void mouse_move_event();
+    void mouse_move_event(); 
     void mouse_release_event();
 
     // Calculates mouse's relative position in the canvas.
@@ -80,6 +89,8 @@ class Canvas : public Widget
 
     // List of shapes drawn on the canvas.
     std::vector<std::shared_ptr<Shape>> shape_list_;
+    std::vector<std::shared_ptr<Shape>> redo_list_;
+    std::shared_ptr<Shape> selected_shape_ = nullptr;
 };
 
 }  // namespace USTC_CG
